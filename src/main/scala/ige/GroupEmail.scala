@@ -20,7 +20,7 @@ case class GroupEmail(email: EmailIn) {
     case _ => (Lipsum.alphanumeric(5).toLowerCase, true)
   }
   lazy val emailRecipients: Set[String] = (email.sender :: email.recipientsAll)
-    .map(email => Pattern.pickFirst(EMAIL_REGEX)(email).get).filterNot(_.matches(WITH_OR_WITHOUT_HASH_PATTERN)).toSet
+    .map(email => Pattern.pickFirstEmail(email).get).filterNot(_.matches(WITH_OR_WITHOUT_HASH_PATTERN)).toSet
 
   override def toString: String = s"[$groupHash] - ${ email.toString } (${ emailRecipients.mkString(", ") })"
 }

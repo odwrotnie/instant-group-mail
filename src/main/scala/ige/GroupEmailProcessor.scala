@@ -20,7 +20,6 @@ case class GroupEmailProcessor(ige: GroupEmail)
   def updateThreadRecipients: Unit = {
     GroupMap.addHashRecipient(ige.groupHash, ige.emailRecipients)
     logger.debug(s"Updating group ${ ige.groupHash } recipients: ${ groupRecipients(ige.groupHash).mkString(", ") }")
-    logger.debug(s"Threads:\n${ GroupMap.hashToRecipientsMapString }")
   }
 
   private def sendFreshThreadEmail = {
