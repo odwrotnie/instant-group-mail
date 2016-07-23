@@ -14,19 +14,19 @@ object IGE
   val WITH_HASH_PATTERN = """instantgroupmail\+(\w+)@gmail.com"""
   val WITH_HASH_REGEX = WITH_HASH_PATTERN.r
   val RECIPIENTS_FILE = "recipients.map"
-  def threadAddress(hash: String) = s"instantgroupmail+$hash@gmail.com"
+  def groupAddress(hash: String) = s"instantgroupmail+$hash@gmail.com"
 
   val smtp = SMTPServer("smtp.gmail.com", ADDRESS, "InstantGM")
   val inbox = IMAPServer("imap.gmail.com", ADDRESS, "InstantGM", "Inbox")
   val archive = IMAPServer("imap.gmail.com", ADDRESS, "InstantGM", ARCHIVE_FOLDER)
 
-  InstantGroupEmail.deserialize
+  GroupMap.deserialize
 
   def processInbox: Unit = {
     inbox.messages foreach { message =>
       println(s" > $message")
-      val ige = InstantGroupEmail(message)
-      val p = InstantGroupEmailProcessor(ige)
+      val ige = GroupEmail(message)
+      val p = GroupEmailProcessor(ige)
       p.process
     }
   }
